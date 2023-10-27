@@ -3,8 +3,6 @@ package org.poster;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class PosterManagerTest {
 
     @Test
@@ -62,6 +60,7 @@ class PosterManagerTest {
         manager.addNewFilm("Как я научился (не научился) программировать");
         manager.addNewFilm("1");
 
+
         manager.findLastFilm();
 
 
@@ -71,8 +70,59 @@ class PosterManagerTest {
         Assertions.assertArrayEquals(expected ,actual);
     }
 
+    @Test
+    public void outputOfFilmsThatIncreaseTheMinimumLimit(){
+        PosterManager manager = new PosterManager(1); //когда фильмов больше , чем лимит
+        manager.addNewFilm("Дурдом");
+        manager.addNewFilm("Тупой еще Тупее");
+        manager.addNewFilm("Как я научился (не научился) программировать");
+        manager.addNewFilm("1");
 
 
+        manager.findLastFilm();
+
+
+        String[] actual = manager.findLastFilm();
+
+        String[] expected = {"1"};
+        Assertions.assertArrayEquals(expected ,actual);
+    }
+
+    @Test
+    public void movieOutputIsLessThanTheLimit(){
+        PosterManager manager = new PosterManager(6); // когда фильмов , меньше чем лимит
+        manager.addNewFilm("Дурдом");
+        manager.addNewFilm("Тупой еще Тупее");
+        manager.addNewFilm("Как я научился (не научился) программировать");
+        manager.addNewFilm("1");
+
+
+        manager.findLastFilm();
+
+
+        String[] actual = manager.findLastFilm();
+
+        String[] expected = {"1","Как я научился (не научился) программировать","Тупой еще Тупее","Дурдом"};
+        Assertions.assertArrayEquals(expected ,actual);
+    }
+
+    @Test
+    public void outputOfFilmsWithEqualLimitAndNumberOfFilms(){ // когда кол-во фильмов = кол-во лимиту
+        PosterManager manager = new PosterManager(4);
+        manager.addNewFilm("Дурдом");
+        manager.addNewFilm("Тупой еще Тупее");
+        manager.addNewFilm("Как я научился (не научился) программировать");
+        manager.addNewFilm("1");
+
+
+        manager.findLastFilm();
+
+
+        String[] actual = manager.findLastFilm();
+
+        String[] expected = {"1","Как я научился (не научился) программировать","Тупой еще Тупее","Дурдом"};
+        Assertions.assertArrayEquals(expected ,actual);
+    }
 
 
 
